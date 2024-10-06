@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark navbar-custom">
+        <div class="container">
+            <img src="@Url.Content("~/Content/imagenes/logo.png")" alt="logo" width="100" height="80" />
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-center">
+                <ul class="navbar-nav flex-grow-1 text-center mx-2">
+                    <li class="mx-5">@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link active" })</li>
+                    <li class="nav-item dropdown mx-5">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Cartelera
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item" href="#">Estandar</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Próximos estrenos</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Preventa</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="mx-5">@Html.ActionLink("Cines", "About", "Home", new { area = "" }, new { @class = "nav-link active" })</li>
+                    <li class="mx-5">@Html.ActionLink("Dulcería", "Contact", "Home", new { area = "" }, new { @class = "nav-link active" })</li>
+                    <li class="mx-5">@Html.ActionLink("Promociones", "About", "Home", new { area = "" }, new { @class = "nav-link active" })</li>
+                    <li class="nav-item dropdown mx-5">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Socio
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Crear Usuario</a></li>
+                                <li><a class="dropdown-item" href="#">Iniciar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
