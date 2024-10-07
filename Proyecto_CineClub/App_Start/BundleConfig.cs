@@ -25,7 +25,9 @@ namespace Proyecto_CineClub
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/css/header.css"));
+                      "~/Content/css/header.css",
+                      "~/Content/css/footer.css",
+                      "~/Content/css/index.css"));
         }
 
     }
