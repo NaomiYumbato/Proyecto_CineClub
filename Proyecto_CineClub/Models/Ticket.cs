@@ -13,5 +13,6 @@ namespace Proyecto_CineClub.Models
         public DateTime FechaCompra { get; set; }
         public int Piso { get; set; }
         public double Monto { get; set; }
+        public int IdCine { get; set; }
     }
 }
