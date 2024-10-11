@@ -11,7 +11,14 @@
     padding:10px
 }
     .col img {
-        width: 50px;
+        width: 247px;
         height: auto;
         object-fit: cover;
     }
+body {
+    background-image: url('/Content/imagenes/img_fondo.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}

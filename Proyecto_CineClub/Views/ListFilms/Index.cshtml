@@ -1,0 +1,158 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+}
+
+@using Proyecto_CineClub.Models
+@model List<Pelicula>
+    <main>
+        @Html.Partial("_SedeFechaForm")
+
+        <div class="row">
+            <section class="p-0">
+                <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="@Url.Content("~/Content/imagenes/banner1.jpg")" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="@Url.Content("~/Content/imagenes/banner2.jpg")" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="@Url.Content("~/Content/imagenes/banner3.jpeg")" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <div class="row">
+            <section class="p-0">
+                <h3 class="p-3 pt-5 mt-4">CARTELERA</h3>
+                <div id="carteleraCarousel" class="carousel slide" data-bs-interval="5000">
+                    <div class="carousel-inner">
+                        @{
+                            var idsPeliculas = ViewBag.idsPeliculas as List<int> ?? new List<int>();
+                            var peliculasSeleccionadas = new List<Pelicula>();
+                            DateTime fechaActual = DateTime.Now; // Obtener la fecha actual
+
+                            // Filtrar películas en cartelera
+                            foreach (var peliculaEnCartelera in Model)
+                            {
+                                if (idsPeliculas.Contains(peliculaEnCartelera.IdPelicula) &&
+                                    peliculaEnCartelera.FechaInicioCartelera <= fechaActual &&
+                                    peliculaEnCartelera.FechaFinCartelera >= fechaActual)
+                                {
+                                    peliculasSeleccionadas.Add(peliculaEnCartelera);
+                                }
+                            }
+
+                            // Dividir las películas en grupos de 5
+                            int peliculasPorGrupo = 5;
+                            int totalPeliculas = peliculasSeleccionadas.Count;
+                            int totalGrupos = (int)Math.Ceiling((double)totalPeliculas / peliculasPorGrupo);
+
+                            for (int g = 0; g < totalGrupos; g++)
+                            {
+                                <div class="carousel-item @(g == 0 ? "active" : "")">
+                                    <div class="row">
+                                        @for (int i = 0; i < peliculasPorGrupo; i++)
+                                        {
+                                            int index = g * peliculasPorGrupo + i;
+                                            if (index < totalPeliculas)
+                                            {
+                                                var pelicula = peliculasSeleccionadas[index];
+                                                <div class="col">
+                                                    <img src="@Url.Content(pelicula.RutaImagen)" alt="@pelicula.Titulo" class="d-block w-100" loading="lazy">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col">
+
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carteleraCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carteleraCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <div class="row">
+            <section class="p-0">
+                <h3 class="p-3 pt-5">PRÓXIMOS ESTRENOS</h3>
+                <div id="proximosEstrenosCarousel" class="carousel slide" data-bs-interval="5000">
+                    <div class="carousel-inner">
+                        @{
+                            var peliculasSelecProx = new List<Pelicula>();
+
+                            // Filtrar películas próximas a estrenar
+                            foreach (var peliculaProximoEstreno in Model)
+                            {
+                                if (idsPeliculas.Contains(peliculaProximoEstreno.IdPelicula) &&
+                                    peliculaProximoEstreno.FechaInicioCartelera > fechaActual)
+                                {
+                                    peliculasSelecProx.Add(peliculaProximoEstreno);
+                                }
+                            }
+
+                            // Dividir las películas en grupos de 5
+                            int totalProximosPeliculas = peliculasSelecProx.Count;
+                            int totalProximosGrupos = (int)Math.Ceiling((double)totalProximosPeliculas / peliculasPorGrupo);
+
+                            for (int g = 0; g < totalProximosGrupos; g++)
+                            {
+                                <div class="carousel-item @(g == 0 ? "active" : "") mb-5">
+                                    <div class="row">
+                                        @for (int i = 0; i < peliculasPorGrupo; i++)
+                                        {
+                                            int index = g * peliculasPorGrupo + i;
+                                            if (index < totalProximosPeliculas)
+                                            {
+                                                var pelicula = peliculasSelecProx[index];
+                                                <div class="col">
+                                                    <img src="@Url.Content(pelicula.RutaImagen)" alt="@pelicula.Titulo" class="d-block w-100" loading="lazy">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col">
+
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#proximosEstrenosCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#proximosEstrenosCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+
+    </main>
