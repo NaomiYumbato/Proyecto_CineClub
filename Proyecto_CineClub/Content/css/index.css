@@ -14,6 +14,7 @@
         width: 247px;
         height: auto;
         object-fit: cover;
+        border-radius: 3px;
     }
 body {
     background-image: url('/Content/imagenes/img_fondo.jpg');
