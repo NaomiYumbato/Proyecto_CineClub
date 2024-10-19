@@ -33,7 +33,7 @@
 
         <div class="row">
             <section class="p-0">
-                <h3 class="p-3 pt-5 mt-4">CARTELERA</h3>
+                <h3 class="p-3 pt-5">CARTELERA</h3>
                 <div id="carteleraCarousel" class="carousel slide" data-bs-interval="5000">
                     <div class="carousel-inner">
                         @{
@@ -59,7 +59,7 @@
 
                             for (int g = 0; g < totalGrupos; g++)
                             {
-                                <div class="carousel-item @(g == 0 ? "active" : "")">
+                                <div class="carousel-item  @(g == 0 ? "active" : "")">
                                     <div class="row">
                                         @for (int i = 0; i < peliculasPorGrupo; i++)
                                         {
@@ -67,9 +67,11 @@
                                             if (index < totalPeliculas)
                                             {
                                                 var pelicula = peliculasSeleccionadas[index];
-                                                <div class="col">
-                                                    <img src="@Url.Content(pelicula.RutaImagen)" alt="@pelicula.Titulo" class="d-block w-100" loading="lazy">
-                                                </div>
+                                                <div class="col text-center mt-4 mb-4">
+                                                    <a href="@Url.Action("DetailsFilms", "DetailsFilms", new { id = pelicula.IdPelicula })">
+                                                        <img src="@Url.Content(pelicula.RutaImagen)" alt="@pelicula.Titulo" class="img-fluid rounded img-index" loading="lazy">
+                                                    </a>
+</div>
                                             }
                                             else
                                             {
@@ -127,8 +129,10 @@
                                             if (index < totalProximosPeliculas)
                                             {
                                                 var pelicula = peliculasSelecProx[index];
-                                                <div class="col">
-                                                    <img src="@Url.Content(pelicula.RutaImagen)" alt="@pelicula.Titulo" class="d-block w-100" loading="lazy">
+                                                <div class="col text-center mt-4 mb-4">
+                                                    <a href="@Url.Action("DetailsFilms", "DetailsFilms", new { id = pelicula.IdPelicula })">
+                                                        <img src="@Url.Content(pelicula.RutaImagen)" alt="@pelicula.Titulo" class="img-fluid rounded" loading="lazy">
+                                                        </a>
                                                 </div>
                                             }
                                             else

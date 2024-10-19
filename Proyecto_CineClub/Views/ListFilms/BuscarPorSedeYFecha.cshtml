@@ -8,10 +8,9 @@
         {
             foreach (var pelicula in Model)
             {
-                <div class="col-2 text-center mt-4 mb-4 custom-col">
-                    <!-- Clase personalizada -->
-                    <img src="@Url.Content(pelicula.RutaImagen)" alt="@pelicula.Titulo" class="img-fluid">
-                    <div>@pelicula.Titulo</div>
+                <div class="col col-md-3 text-center mt-4 mb-4 custom-col">
+                    <img src="@Url.Content(pelicula.RutaImagen)" alt="@pelicula.Titulo" class="img-fluid rounded">
+                    <div class="title">@pelicula.Titulo</div>
                 </div>
             }
         }
@@ -24,9 +23,3 @@
     </div>
 </div>
 
-<style>
-    .custom-col {
-        flex: 0 0 20%; 
-        max-width: 20%; 
-    }
-</style>

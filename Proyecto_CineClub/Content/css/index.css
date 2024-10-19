@@ -10,12 +10,10 @@
 .col{
     padding:10px
 }
-    .col img {
-        width: 247px;
-        height: auto;
+.img-index {
+        width: 400px;
         object-fit: cover;
-        border-radius: 3px;
-    }
+}
 body {
     background-image: url('/Content/imagenes/img_fondo.jpg');
     background-size: cover;
@@ -23,3 +21,37 @@ body {
     background-position: center;
     background-attachment: fixed;
 }
+.custom-col {
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+
+.title {
+    font-style: oblique;
+    text-decoration: none;
+    color: #17202a;
+}
+
+    .title:hover {
+        color: #e74c3c;
+    }
+
+.img-cartelera {
+    width: 400px;
+    object-fit: cover;
+}
+
+.custom-list {
+    background-color: #3498db;
+}
+.custom-list:hover {
+    background-color: #ec7063;
+}
+
+.custom-item {
+    color: #ffffff;
+}
+
+    .custom-item:hover {
+        color: #17202a;
+    }
