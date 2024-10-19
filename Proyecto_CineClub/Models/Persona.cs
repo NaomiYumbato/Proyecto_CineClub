@@ -16,8 +16,7 @@ namespace Proyecto_CineClub.Models
         public string Celular { get; set; }
         public string Correo { get; set; }
         public DateTime FechaNacimiento { get; set; }
-        public DateTime FechaRegistro { get; set; }
-        public string Sexo { get; set; }                
+        public DateTime FechaRegistro { get; set; }        
         public string Usuario { get; set; }
         public string Password { get; set; }
                 
