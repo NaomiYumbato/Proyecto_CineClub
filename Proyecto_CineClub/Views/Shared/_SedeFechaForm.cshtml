@@ -1,0 +1,19 @@
+﻿<section class="row navbar-custom align-items-center py-3 justify-content-center" aria-labelledby="aspnetTitle">
+    @using (Html.BeginForm("BuscarPorSedeYFecha", "ListFilms", FormMethod.Get))
+    {
+        <div class="col-md-12 d-flex justify-content-center">
+            <strong class="me-3" style="font-size: 15px;">Sede:</strong>
+                @Html.DropDownList("idSede", (SelectList)ViewBag.selectSede, new
+                {
+                    @class = "form-control me-3",
+                    style = "flex: 1; max-width: 150px;",
+                    Value = ViewBag.IdSede ?? ""
+                })
+                <strong class="me-3" style="font-size: 15px;">Fecha:</strong>
+                <input type="date" name="fecha" class="form-control me-3" style="flex: 1; max-width: 150px;"
+                       value="@ViewBag.Fecha?.ToString(" yyyy-MM-dd")" />
+
+                <button type="submit" class="btn rounded-5 button-style" style="margin-left: 10px;">Buscar</button>
+         </div>
+    }
+</section>

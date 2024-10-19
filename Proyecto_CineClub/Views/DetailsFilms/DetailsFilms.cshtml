@@ -1,0 +1,50 @@
+﻿@model Proyecto_CineClub.Models.Pelicula
+
+@{
+    ViewBag.Title = "DetailsFilms";
+}
+
+<div class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card" style="background-color: rgba(255, 255, 255, 0.3);">
+                <div class="card-body">
+                    <section class="row">
+                        <aside class="col-md-5 p-4">
+                            <div class="position-relative">
+                                <img src="@Url.Content(Model.RutaImagen)" alt="@Model.Titulo" class="img-fluid rounded img-cartelera">
+
+                                @if (Model.FechaInicioCartelera > DateTime.Now)
+                                {
+                                    <img src="~/Content/imagenes/peliculas/proximamente.png" alt="Próximamente" class="position-absolute top-0 start-0" style="width: 100%; height: auto; opacity: 0.8;">
+                                }
+                            </div>
+                        </aside>
+                        <aside class="col-md-7 p-4">
+                            <h4>
+                                @Html.DisplayFor(model => model.Titulo)
+                            </h4>
+                            <p>
+                                @Html.DisplayFor(model => model.Descripcion)
+                            </p>
+                            <p>
+                                Fechas disponibles:
+                                <br />
+                                @Model.FechaInicioCartelera.ToString("dd MMMM yyyy") -
+                                @Model.FechaFinCartelera.ToString("dd MMMM yyyy")
+                            </p>
+                            <div class="d-flex justify-content-between mt-3">
+                                <!-- Contenedor flex para igualar el ancho -->
+                                @if (Model.FechaInicioCartelera <= DateTime.Now) // Verifica si la película ya se ha estrenado
+                                {
+                                    @Html.ActionLink("COMPRAR", "Edit", new { id = Model.IdPelicula }, new { @class = "btn btn-style rounded-5 flex-fill me-2" })
+                                }
+                                <button onclick="window.history.back();" class="btn btn-secondary rounded-5 flex-fill">VOLVER</button>
+                            </div>
+                        </aside>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

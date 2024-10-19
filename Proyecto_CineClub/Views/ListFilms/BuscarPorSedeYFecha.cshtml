@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Proyecto_CineClub.Models.Pelicula>
+
+@Html.Partial("_SedeFechaForm")
+
+<div class="container">
+    <div class="row">
+        @if (Model.Any())
+        {
+            foreach (var pelicula in Model)
+            {
+                <div class="col col-md-3 text-center mt-4 mb-4 custom-col">
+                    <img src="@Url.Content(pelicula.RutaImagen)" alt="@pelicula.Titulo" class="img-fluid rounded">
+                    <div class="title">@pelicula.Titulo</div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <p>No se encontraron películas que coincidan con la búsqueda.</p>
+            </div>
+        }
+    </div>
+</div>
+

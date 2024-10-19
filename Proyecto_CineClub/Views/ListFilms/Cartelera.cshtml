@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Cartelera";
+}
+
+<main>
+    <section class="row navbar-custom align-items-center py-3" aria-labelledby="aspnetTitle">
+        @using (Html.BeginForm("Cartelera", "ListFilms", FormMethod.Get))
+        {
+            <div class="col-md-12 d-flex justify-content-center">
+                <div class="input-group">
+                    <input type="text" name="titulo" class="form-control" placeholder="Buscar por título" aria-label="Buscar por título" value="@Request.QueryString["titulo"]" />
+                    <button type="submit" class="btn button-style">Buscar</button>
+                </div>
+            </div>
+        }
+    </section>
+   
+    <section class="row">
+        <aside class="col-md-2">
+            <h5>Filtrar por género</h5>
+            <ul class="list-group">
+                <li class="list-group-item custom-list">
+                    <a href="@Url.Action("Cartelera", new { idGenero = (int?)null })" class="text-decoration-none custom-item">
+                        Todos
+                    </a>
+                </li>
+                @foreach (var genero in ViewBag.ListGenero)
+                {
+                    <li class="list-group-item custom-list @(ViewBag.idGenero == genero.IdGeneroPelicula ? "active" : "")">
+                        <a href="@Url.Action("Cartelera", new { idGenero = genero.IdGeneroPelicula })" class="text-decoration-none custom-item">
+                            @genero.Nombre
+                        </a>
+                    </li>
+                }
+            </ul>
+        </aside>
+
+        <aside class="col-md-10 p-0">
+            @if (ViewBag.Peliculas != null && ViewBag.Peliculas.Count > 0)
+            {
+                <div class="row m-1">
+                    @foreach (var pelicula in ViewBag.Peliculas)
+                    {
+                        <div class="col text-center mt-4 mb-4 custom-col">
+                            <a class="title" href="@Url.Action("DetailsFilms", "DetailsFilms", new { id = pelicula.IdPelicula })">
+                                <div class="position-relative">
+                                    <img src="@Url.Content(pelicula.RutaImagen)" alt="@pelicula.Titulo" class="img-fluid rounded img-cartelera">
+
+                                    @if (pelicula.FechaInicioCartelera > DateTime.Now) 
+                                    {
+                                        <img src="~/Content/imagenes/peliculas/proximamente.png" alt="Próximamente" class="position-absolute top-0 start-0" style="width: 100%; height: auto; opacity: 0.8;">
+                                    }
+                                </div>
+                                <div>@pelicula.Titulo</div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="col-12 text-center">
+                    <p>No se encontraron películas que coincidan con la búsqueda.</p>
+                </div>
+            }
+        </aside>
+
+    </section>
+</main>
