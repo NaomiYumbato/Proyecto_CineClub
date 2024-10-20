@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Proyecto_CineClub.Models
 {
-    public class TicketDetalle
+    public class ProductoDulceria
     {
         public int IdProductoDulceria { get; set; }
         public string Nombre { get; set; }
