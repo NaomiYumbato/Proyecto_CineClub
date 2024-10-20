@@ -27,7 +27,8 @@ namespace Proyecto_CineClub
                       "~/Content/site.css",
                       "~/Content/css/header.css",
                       "~/Content/css/footer.css",
-                      "~/Content/css/index.css"));
+                      "~/Content/css/index.css",
+                      "~/Content/css/login.css"));
         }
 
     }

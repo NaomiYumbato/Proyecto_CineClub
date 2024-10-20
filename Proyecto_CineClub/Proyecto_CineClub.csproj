@@ -160,6 +160,7 @@
     <Content Include="Content\css\footer.css" />
     <Content Include="Content\css\header.css" />
     <Content Include="Content\css\index.css" />
+    <Content Include="Content\css\login.css" />
     <Content Include="Content\imagenes\banner1.jpg" />
     <Content Include="Content\imagenes\banner2.jpg" />
     <Content Include="Content\imagenes\banner3.jpeg" />
