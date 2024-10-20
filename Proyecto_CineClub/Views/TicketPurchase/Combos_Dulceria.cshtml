@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Proyecto_CineClub.Models.ComboDulceria>
+
+@{
+    ViewBag.Title = "Seleccionar Combo";
+}
+
+<h2>Seleccionar Combo</h2>
+
+<section style="margin-top: 10px; margin-bottom: 10px">    
+
+        @using (Html.BeginForm("ConfirmarSeleccion", "TicketPurchase", FormMethod.Post)) // Cambia "TuAccion" y "TuControlador" por los valores correctos
+    {
+        foreach (var combo in Model)
+        {
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row no-gutters">
+                <div class="col-md-4" style="position: relative;">
+                    <img src="@Url.Content("~/Content/imagenes/dulceria.jpg")" class="card-img" alt="Descripción de la imagen" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div style="position: absolute; bottom: 10px; left: 10px; background: rgba(255, 255, 255, 0.7); padding: 5px; border-radius: 5px;">
+                        <input type="radio" id="combo_@combo.IdComboDulceria" name="selectedCombo" value="@combo.IdComboDulceria">
+                        <label for="combo_@combo.IdComboDulceria">Seleccionar</label>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Combo ID: @combo.IdComboDulceria</h5>
+                        <table class="table-combo">
+                            <tbody>
+                                @{
+                                        var productosContados = new Dictionary<string, Tuple<double, int>>();
+                                        foreach (var producto in combo.Productos)
+                                        {
+                                            string nombreProducto = producto.Nombre;
+                                            double precioProducto = Convert.ToDouble(producto.Precio);
+                                            if (productosContados.ContainsKey(nombreProducto))
+                                            {
+                                                int cantidadExistente = productosContados[nombreProducto].Item2;
+                                                productosContados[nombreProducto] = Tuple.Create(precioProducto, cantidadExistente + 1);
+                                            }
+                                            else
+                                            {
+                                                productosContados[nombreProducto] = Tuple.Create(precioProducto, 1);
+                                            }
+                                        }
+                                        double totalCombo = 0;
+                                        foreach (var item in productosContados)
+                                        {
+                                            double total = item.Value.Item1 * item.Value.Item2;
+                                            totalCombo += total;
+                                    <tr>
+                                        <td>(@item.Value.Item2) @item.Key</td>
+                                    </tr>
+                                        }
+                                    <tr>
+                                        <td><strong>Total: @totalCombo.ToString("C")</strong></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <label for="cantidad_@combo.IdComboDulceria">Cantidad:</label>
+                            <input type="number" id="cantidad_@combo.IdComboDulceria" name="cantidad_@combo.IdComboDulceria" min="1" value="1" style="width: 60px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+
+        <input type="hidden" name="asientosSeleccionados" value="@ViewBag.AsientosSeleccionados" />
+        <input type="hidden" name="id_funcion" value="@ViewBag.IdFuncion" />
+
+ <!-- Botón de continuar -->
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Continuar</button>
+        </div>
+    }
+</section>

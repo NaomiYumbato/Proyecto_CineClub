@@ -105,6 +105,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstraction\IAsiento.cs" />
+    <Compile Include="Abstraction\IFuncion.cs" />
+    <Compile Include="Abstraction\IComboDulceria.cs" />
     <Compile Include="Abstraction\IGenero.cs" />
     <Compile Include="Abstraction\IPelicula.cs" />
     <Compile Include="Abstraction\ISala.cs" />
@@ -118,6 +121,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListFilmsController.cs" />
     <Compile Include="Controllers\TicketPurchaseController.cs" />
+    <Compile Include="Data\AsientoDAO.cs" />
+    <Compile Include="Data\FuncionDAO.cs" />
+    <Compile Include="Data\ComboDulceriaDAO.cs" />
     <Compile Include="Data\GeneroDAO.cs" />
     <Compile Include="Data\PeliculasDAO.cs" />
     <Compile Include="Data\SalaDAO.cs" />
@@ -140,6 +146,8 @@
     <Compile Include="Models\Sala.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\TipoEmpleado.cs" />
+    <Compile Include="Models\ViewModels\AsientoPurchase.cs" />
+    <Compile Include="Models\ViewModels\ConfirmarSeleccionViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IRepositorioGET.cs" />
@@ -168,6 +176,7 @@
     <Content Include="Content\imagenes\banner1.jpg" />
     <Content Include="Content\imagenes\banner2.jpg" />
     <Content Include="Content\imagenes\banner3.jpeg" />
+    <Content Include="Content\imagenes\dulceria.jpg" />
     <Content Include="Content\imagenes\img_fondo.jpg" />
     <Content Include="Content\imagenes\logo.png" />
     <Content Include="Content\imagenes\peliculas\a-complete-unknown.png" />
@@ -230,11 +239,17 @@
     <Content Include="Views\Shared\_SedeFechaForm.cshtml" />
     <Content Include="Views\ListFilms\Cartelera.cshtml" />
     <Content Include="Views\DetailsFilms\DetailsFilms.cshtml" />
+    <Content Include="Views\TicketPurchase\Combos_Dulceria.cshtml" />
+    <Content Include="Views\TicketPurchase\FuncionesDisponibles.cshtml" />
+    <Content Include="Views\TicketPurchase\SeleccionarAsientos.cshtml" />
+    <Content Include="Views\TicketPurchase\ConfirmarSeleccion.cshtml" />
+    <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Auth\Register.cshtml" />
+    <Content Include="Views\TicketPurchase\ElegirCombo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Default\" />
-    <Folder Include="Views\TicketPurchase\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
