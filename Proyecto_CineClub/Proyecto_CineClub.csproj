@@ -244,6 +244,7 @@
     <Content Include="Views\TicketPurchase\ConfirmarSeleccion.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Auth\Register.cshtml" />
+    <Content Include="Views\TicketPurchase\ElegirCombo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

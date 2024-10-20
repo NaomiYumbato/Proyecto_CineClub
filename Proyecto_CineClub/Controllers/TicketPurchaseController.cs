@@ -93,7 +93,7 @@ namespace Proyecto_CineClub.Controllers
             return listado;
         }
 
-        private Sala GetSalaPorId(int idSala)
+        public Sala GetSalaPorId(int idSala)
         {
             Sala sala = null;
             var query = "usp_GetSalaById";
@@ -124,7 +124,7 @@ namespace Proyecto_CineClub.Controllers
         }
 
 
-        private Cliente GetClientePorIdPersona(int idPersona)
+        public Cliente GetClientePorIdPersona(int idPersona)
         {
             Cliente cliente = null;
             var query = "usp_GetClienteByIdPersona";
@@ -183,7 +183,6 @@ namespace Proyecto_CineClub.Controllers
             }
         }
 
-
         public Funcion GetFuncionPorId(int id_funcion)
         {
             Funcion funcion = null;
@@ -226,7 +225,7 @@ namespace Proyecto_CineClub.Controllers
             return View(funciones);
         }
 
-        //Luego el usuario selecciona la funcion y carga una vista con los asientos disponibles y los asientos ocupados en rojo
+        
         
         [HttpGet]
         public ActionResult SeleccionarAsientos(int id_funcion)
@@ -246,11 +245,56 @@ namespace Proyecto_CineClub.Controllers
             }
 
             // Redirigir a ConfirmarSeleccion pasando los asientos seleccionados y el id_funcion
-            return RedirectToAction("ConfirmarSeleccion", new { asientosSeleccionados = string.Join(",", asientosSeleccionados), id_funcion });
+            //return RedirectToAction("ConfirmarSeleccion", new { asientosSeleccionados = string.Join(",", asientosSeleccionados), id_funcion });
+
+            return RedirectToAction("Combos_Dulceria", new { asientosSeleccionados = string.Join(",", asientosSeleccionados), id_funcion });
+            
+        }
+
+        // Acción para mostrar los combos de dulceria
+        [HttpGet]
+        public ActionResult Combos_Dulceria(string asientosSeleccionados, int id_funcion)
+        {
+            var listado = _comboDAO.GetAll();
+            List<SelectListItem> selectItems = new List<SelectListItem>();
+
+            if (listado != null && listado.Any())
+            {
+                foreach (var combo in listado)
+                {
+                    string nombresProductos = "";
+                    foreach (var producto in combo.Productos)
+                    {
+                        nombresProductos += producto.Nombre + ", ";
+                    }
+                    if (nombresProductos.EndsWith(", "))
+                    {
+                        nombresProductos = nombresProductos.Substring(0, nombresProductos.Length - 2);
+                    }
+                    selectItems.Add(new SelectListItem
+                    {
+                        Value = combo.IdComboDulceria.ToString(),
+                        Text = nombresProductos
+                    });
+                }
+            }
+
+            ViewBag.selectCombos = new SelectList(selectItems, "Value", "Text");
+            ViewBag.AsientosSeleccionados = asientosSeleccionados;
+            ViewBag.IdFuncion = id_funcion;
+            return View(listado);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult Combos_Dulceria(string asientosSeleccionados, int id_funcion, int selectedCombo)
+        {
+            return RedirectToAction("ConfirmarSeleccion", new { asientosSeleccionados, id_funcion, selectedCombo });
         }
 
         [HttpGet]
-        public ActionResult ConfirmarSeleccion(string asientosSeleccionados, int id_funcion)
+        public ActionResult ConfirmarSeleccion(string asientosSeleccionados, int id_funcion, int? selectedCombo)
         {
             var asientos = asientosSeleccionados.Split(',').Select(int.Parse).ToArray();
 
@@ -278,7 +322,7 @@ namespace Proyecto_CineClub.Controllers
                 IdCliente = (Session["usuario"] as Persona).IdPersona,
                 IdCine = GetSalaPorId(funcion.IdSala).IdCine,
                 Piso = GetSalaPorId(funcion.IdSala).Piso,
-                IdComboSeleccionado= null
+                IdComboSeleccionado= selectedCombo
 
             };
             
@@ -314,41 +358,7 @@ namespace Proyecto_CineClub.Controllers
 
         }
 
-        // Acción para mostrar los combos de dulceria
-        public ActionResult Combos_Dulceria()
-        {
-            var listado = _comboDAO.GetAll(); 
-
-            List<SelectListItem> selectItems = new List<SelectListItem>();
-
-            if (listado != null && listado.Any())
-            {
-                foreach (var combo in listado)
-                {
-                    string nombresProductos = "";
-                    foreach (var producto in combo.Productos)
-                    {
-                        nombresProductos += producto.Nombre + ", ";
-                    }
-
-                    if (nombresProductos.EndsWith(", "))
-                    {
-                        nombresProductos = nombresProductos.Substring(0, nombresProductos.Length - 2);
-                    }
-
-                    selectItems.Add(new SelectListItem
-                    {
-                        Value = combo.IdComboDulceria.ToString(),
-                        Text = nombresProductos
-                    });
-                }
-            }
-
-            ViewBag.selectCombos = new SelectList(selectItems, "Value", "Text");
-
-            return View(listado); 
-        }
-
+        
     }
 
 }

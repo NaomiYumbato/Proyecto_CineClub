@@ -1,8 +1,17 @@
 ﻿@model IEnumerable<Proyecto_CineClub.Models.ComboDulceria>
 
-<section style="margin-top: 10px; margin-bottom: 10px">
-    @foreach (var combo in Model)
+@{
+    ViewBag.Title = "Seleccionar Combo";
+}
+
+<h2>Seleccionar Combo</h2>
+
+<section style="margin-top: 10px; margin-bottom: 10px">    
+
+        @using (Html.BeginForm("ConfirmarSeleccion", "TicketPurchase", FormMethod.Post)) // Cambia "TuAccion" y "TuControlador" por los valores correctos
     {
+        foreach (var combo in Model)
+        {
         <div class="card mb-3" style="max-width: 540px;">
             <div class="row no-gutters">
                 <div class="col-md-4" style="position: relative;">
@@ -18,43 +27,36 @@
                         <table class="table-combo">
                             <tbody>
                                 @{
-                                    var productosContados = new Dictionary<string, Tuple<double, int>>();
-
-                                    foreach (var producto in combo.Productos)
-                                    {
-                                        string nombreProducto = producto.Nombre;
-                                        double precioProducto = Convert.ToDouble(producto.Precio);
-
-                                        if (productosContados.ContainsKey(nombreProducto))
+                                        var productosContados = new Dictionary<string, Tuple<double, int>>();
+                                        foreach (var producto in combo.Productos)
                                         {
-                                            int cantidadExistente = productosContados[nombreProducto].Item2;
-                                            productosContados[nombreProducto] = Tuple.Create(precioProducto, cantidadExistente + 1);
+                                            string nombreProducto = producto.Nombre;
+                                            double precioProducto = Convert.ToDouble(producto.Precio);
+                                            if (productosContados.ContainsKey(nombreProducto))
+                                            {
+                                                int cantidadExistente = productosContados[nombreProducto].Item2;
+                                                productosContados[nombreProducto] = Tuple.Create(precioProducto, cantidadExistente + 1);
+                                            }
+                                            else
+                                            {
+                                                productosContados[nombreProducto] = Tuple.Create(precioProducto, 1);
+                                            }
                                         }
-                                        else
+                                        double totalCombo = 0;
+                                        foreach (var item in productosContados)
                                         {
-                                            productosContados[nombreProducto] = Tuple.Create(precioProducto, 1);
+                                            double total = item.Value.Item1 * item.Value.Item2;
+                                            totalCombo += total;
+                                    <tr>
+                                        <td>(@item.Value.Item2) @item.Key</td>
+                                    </tr>
                                         }
-                                    }
-
-                                    double totalCombo = 0;
-
-                                    foreach (var item in productosContados)
-                                    {
-                                        double total = item.Value.Item1 * item.Value.Item2;
-                                        totalCombo += total;
-
-                                        <tr>
-                                            <td>(@item.Value.Item2) @item.Key</td>
-                                        </tr>
-                                    }
-
                                     <tr>
                                         <td><strong>Total: @totalCombo.ToString("C")</strong></td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
-
                         <div class="form-group">
                             <label for="cantidad_@combo.IdComboDulceria">Cantidad:</label>
                             <input type="number" id="cantidad_@combo.IdComboDulceria" name="cantidad_@combo.IdComboDulceria" min="1" value="1" style="width: 60px;">
@@ -62,6 +64,15 @@
                     </div>
                 </div>
             </div>
+        </div>
+        }
+
+        <input type="hidden" name="asientosSeleccionados" value="@ViewBag.AsientosSeleccionados" />
+        <input type="hidden" name="id_funcion" value="@ViewBag.IdFuncion" />
+
+ <!-- Botón de continuar -->
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Continuar</button>
         </div>
     }
 </section>

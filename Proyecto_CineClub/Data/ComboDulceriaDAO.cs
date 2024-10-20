@@ -16,7 +16,7 @@ namespace Proyecto_CineClub.Data
         public IEnumerable<ComboDulceria> GetAll()
         {
             var combosDict = new Dictionary<int, ComboDulceria>();
-            var sp = "sp_ObtenerCombosConProductos";
+            var sp = "usp_ObtenerCombosConProductos";
 
             try
             {
