@@ -17,7 +17,7 @@
 
         @foreach (var asiento in Model.AsientosSeleccionados)
         {
-            <input type="" name="asientosSeleccionados" value="@asiento.IdAsiento" />
+            <input type="hidden" name="asientosSeleccionados" value="@asiento.IdAsiento" />
         }
         
         <input type="hidden" name="IdCliente" value="@Model.IdCliente" />       

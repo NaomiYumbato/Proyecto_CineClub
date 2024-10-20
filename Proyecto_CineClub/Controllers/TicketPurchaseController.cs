@@ -19,7 +19,7 @@ namespace Proyecto_CineClub.Controllers
         private readonly PeliculasDAO _peliculaDAO;
         private readonly ComboDulceriaDAO _comboDAO;
 
-		public TicketPurchaseController()
+        public TicketPurchaseController()
         {
             _peliculaDAO = new PeliculasDAO();
             _comboDAO = new ComboDulceriaDAO();
@@ -224,9 +224,8 @@ namespace Proyecto_CineClub.Controllers
             ViewBag.id_pelicula = id_pelicula;
             return View(funciones);
         }
+        //Luego el usuario selecciona la funcion y carga una vista con los asientos disponibles y los asientos ocupados en rojo
 
-        
-        
         [HttpGet]
         public ActionResult SeleccionarAsientos(int id_funcion)
         {
@@ -234,7 +233,6 @@ namespace Proyecto_CineClub.Controllers
             ViewBag.id_funcion = id_funcion;
             return View(asientos);
         }
-
         [HttpPost]
         public ActionResult SeleccionarAsientos(int id_funcion, int[] asientosSeleccionados)
         {
@@ -243,67 +241,18 @@ namespace Proyecto_CineClub.Controllers
                 ViewBag.ErrorMessage = "Por favor, seleccione al menos un asiento.";
                 return RedirectToAction("SeleccionarAsientos", new { id_funcion });
             }
-
             // Redirigir a ConfirmarSeleccion pasando los asientos seleccionados y el id_funcion
-            //return RedirectToAction("ConfirmarSeleccion", new { asientosSeleccionados = string.Join(",", asientosSeleccionados), id_funcion });
-
-            return RedirectToAction("Combos_Dulceria", new { asientosSeleccionados = string.Join(",", asientosSeleccionados), id_funcion });
-            
+            return RedirectToAction("ConfirmarSeleccion", new { asientosSeleccionados = string.Join(",", asientosSeleccionados), id_funcion });
         }
-
-        // Acción para mostrar los combos de dulceria
         [HttpGet]
-        public ActionResult Combos_Dulceria(string asientosSeleccionados, int id_funcion)
-        {
-            var listado = _comboDAO.GetAll();
-            List<SelectListItem> selectItems = new List<SelectListItem>();
-
-            if (listado != null && listado.Any())
-            {
-                foreach (var combo in listado)
-                {
-                    string nombresProductos = "";
-                    foreach (var producto in combo.Productos)
-                    {
-                        nombresProductos += producto.Nombre + ", ";
-                    }
-                    if (nombresProductos.EndsWith(", "))
-                    {
-                        nombresProductos = nombresProductos.Substring(0, nombresProductos.Length - 2);
-                    }
-                    selectItems.Add(new SelectListItem
-                    {
-                        Value = combo.IdComboDulceria.ToString(),
-                        Text = nombresProductos
-                    });
-                }
-            }
-
-            ViewBag.selectCombos = new SelectList(selectItems, "Value", "Text");
-            ViewBag.AsientosSeleccionados = asientosSeleccionados;
-            ViewBag.IdFuncion = id_funcion;
-            return View(listado);
-        }
-
-
-
-        [HttpPost]
-        public ActionResult Combos_Dulceria(string asientosSeleccionados, int id_funcion, int selectedCombo)
-        {
-            return RedirectToAction("ConfirmarSeleccion", new { asientosSeleccionados, id_funcion, selectedCombo });
-        }
-
-        [HttpGet]
-        public ActionResult ConfirmarSeleccion(string asientosSeleccionados, int id_funcion, int? selectedCombo)
+        public ActionResult ConfirmarSeleccion(string asientosSeleccionados, int id_funcion)
         {
             var asientos = asientosSeleccionados.Split(',').Select(int.Parse).ToArray();
-
             if (asientos.Length == 0)
             {
                 ViewBag.ErrorMessage = "Por favor, seleccione al menos un asiento.";
                 return RedirectToAction("SeleccionarAsientos", new { id_funcion });
             }
-
             var asientosDetalles = GetAsientosPorFuncion(id_funcion)
                                     .Where(a => asientos.Contains(a.IdAsiento))
                                     .Select(a => new AsientoPurchase
@@ -312,37 +261,30 @@ namespace Proyecto_CineClub.Controllers
                                         IdSala = a.IdSala,
                                         Disponibilidad = a.Disponibilidad
                                     }).ToList();
-
             var funcion = GetFuncionPorId(id_funcion);
-
             var viewModel = new ConfirmarSeleccionViewModel
             {
                 AsientosSeleccionados = asientosDetalles,
-                IdFuncion = id_funcion,                
+                IdFuncion = id_funcion,
                 IdCliente = (Session["usuario"] as Persona).IdPersona,
                 IdCine = GetSalaPorId(funcion.IdSala).IdCine,
                 Piso = GetSalaPorId(funcion.IdSala).Piso,
-                IdComboSeleccionado= selectedCombo
-
+                IdComboSeleccionado = null
             };
-            
+
             return View(viewModel);
         }
-
         [HttpPost]
-        public ActionResult ConfirmarSeleccion(int IdCliente, int IdFuncion, int Piso , int IdCine, int? IdComboSeleccionado, int[] asientosSeleccionados)
+        public ActionResult ConfirmarSeleccion(int IdCliente, int IdFuncion, int Piso, int IdCine, int? IdComboSeleccionado, int[] asientosSeleccionados)
         {
             Persona usuario = Session["usuario"] as Persona;
             if (usuario == null)
             {
                 return RedirectToAction("Login", "Auth");
             }
-                        
 
             string resultado = EjecutarRegistrarCompra(IdCliente, IdFuncion, Piso, IdCine, IdComboSeleccionado, asientosSeleccionados);
             ViewBag.Mensaje = resultado;
-
-
             var viewModel = new ConfirmarSeleccionViewModel
             {
                 IdCliente = IdCliente,
@@ -351,14 +293,10 @@ namespace Proyecto_CineClub.Controllers
                 IdCine = IdCine,
                 IdComboSeleccionado = IdComboSeleccionado,
                 AsientosSeleccionados = GetAsientosPorFuncion(IdFuncion).Where(a => asientosSeleccionados.Contains(a.IdAsiento)).ToList(),
-  
+
             };
-
             return View(viewModel);
-
         }
 
-        
     }
-
 }
