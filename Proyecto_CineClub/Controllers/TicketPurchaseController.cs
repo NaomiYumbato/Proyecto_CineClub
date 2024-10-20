@@ -12,10 +12,12 @@ namespace Proyecto_CineClub.Controllers
     public class TicketPurchaseController : Controller
     {
         private readonly PeliculasDAO _peliculaDAO;
+        private readonly ComboDulceriaDAO _comboDAO;
 
         public TicketPurchaseController()
         {
             _peliculaDAO = new PeliculasDAO();
+            _comboDAO = new ComboDulceriaDAO();
         }
 
         //[HttpGet]
@@ -68,6 +70,41 @@ namespace Proyecto_CineClub.Controllers
         //{
         //    // Implementar la lógica para el procedimiento de compra de ticket
         //}
+
+        // Acción para mostrar los combos de dulceria
+        public ActionResult Combos_Dulceria()
+        {
+            var listado = _comboDAO.GetAll(); 
+
+            List<SelectListItem> selectItems = new List<SelectListItem>();
+
+            if (listado != null && listado.Any())
+            {
+                foreach (var combo in listado)
+                {
+                    string nombresProductos = "";
+                    foreach (var producto in combo.Productos)
+                    {
+                        nombresProductos += producto.Nombre + ", ";
+                    }
+
+                    if (nombresProductos.EndsWith(", "))
+                    {
+                        nombresProductos = nombresProductos.Substring(0, nombresProductos.Length - 2);
+                    }
+
+                    selectItems.Add(new SelectListItem
+                    {
+                        Value = combo.IdComboDulceria.ToString(),
+                        Text = nombresProductos
+                    });
+                }
+            }
+
+            ViewBag.selectCombos = new SelectList(selectItems, "Value", "Text");
+
+            return View(listado); 
+        }
 
     }
 

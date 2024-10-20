@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Proyecto_CineClub.Models
 {
-    public class DisponibilidadAsiento
+    public class Funcion
     {
         public int IdFuncion { get; set; }
         public int IdSala { get; set; }

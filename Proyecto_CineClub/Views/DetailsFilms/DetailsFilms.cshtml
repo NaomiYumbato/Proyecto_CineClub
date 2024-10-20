@@ -37,7 +37,7 @@
                                 <!-- Contenedor flex para igualar el ancho -->
                                 @if (Model.FechaInicioCartelera <= DateTime.Now) // Verifica si la película ya se ha estrenado
                                 {
-                                    @Html.ActionLink("COMPRAR","ComprarTicket", "TicketPurchase", new { id = Model.IdPelicula }, new { @class = "btn btn-style rounded-5 flex-fill me-2" })
+                                    @Html.ActionLink("COMPRAR", "ComprarTicket", "TicketPurchase", new { id = Model.IdPelicula }, new { @class = "btn button-style rounded-5 flex-fill me-2" })
                                 }
                                 <button onclick="window.history.back();" class="btn btn-secondary rounded-5 flex-fill">VOLVER</button>
                             </div>
