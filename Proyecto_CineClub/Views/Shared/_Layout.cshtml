@@ -9,9 +9,10 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+
     <div class="content">
         <nav class="navbar navbar-expand-sm navbar-dark navbar-custom">
-            <div class="container">
+            <div class="container">                
                 <img src="@Url.Content("~/Content/imagenes/logo.png")" alt="logo" width="100" height="80" class="d-block mx-auto" />
                 <div class="collapse navbar-collapse d-flex justify-content-center">
                     <ul class="navbar-nav flex-grow-1 text-center">
@@ -26,8 +27,20 @@
                                     Socio
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#">Crear Usuario</a></li>
-                                    <li><a class="dropdown-item" href="#">Iniciar Sesión</a></li>
+                                    @if (Session["usuario"] == null)
+                                    {
+                                        <li>@Html.ActionLink("Iniciar Sesion", "Login", "Auth", new { area = "" }, new { @class = "nav-link active text-secondary" })</li>
+                                        <li>@Html.ActionLink("Registrarse", "Register", "Auth", new { area = "" }, new { @class = "nav-link active text-secondary" })</li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            @using (Html.BeginForm("Logout", "Auth", FormMethod.Post))
+                                            {
+                                                <button type="submit" class="nav-link active text-secondary">Cerrar Sesión</button>
+                                            }
+                                        </li>
+                                    }
                                 </ul>
                             </div>
                         </li>

@@ -9,6 +9,5 @@ namespace Proyecto_CineClub.Models
     {
         public int IdAsiento { get; set; }
         public int IdSala { get; set; }
-        public bool Disponibilidad { get; set; }
     }
 }

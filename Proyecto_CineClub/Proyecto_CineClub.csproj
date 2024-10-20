@@ -113,9 +113,11 @@
     <Compile Include="App_Start\BundleConfig2.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\DetailsFilmsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListFilmsController.cs" />
+    <Compile Include="Controllers\TicketPurchaseController.cs" />
     <Compile Include="Data\GeneroDAO.cs" />
     <Compile Include="Data\PeliculasDAO.cs" />
     <Compile Include="Data\SalaDAO.cs" />
@@ -228,6 +230,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Default\" />
+    <Folder Include="Views\TicketPurchase\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

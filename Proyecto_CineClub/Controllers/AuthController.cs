@@ -40,7 +40,7 @@ namespace Proyecto_CineClub.Controllers
                     string Celular = dr.GetString(dr.GetOrdinal("celular"));
                     string Correo = dr.GetString(dr.GetOrdinal("correo"));
                     DateTime FechaNacimiento = dr.GetDateTime(dr.GetOrdinal("fec_nacimiento"));
-                    DateTime FechaRegistro = dr.GetDateTime(dr.GetOrdinal("fec_registro"));                    
+                    DateTime FechaRegistro = dr.GetDateTime(dr.GetOrdinal("fec_registro"));
                     string Usuario = dr.GetString(dr.GetOrdinal("usuario"));
                     string Password = dr.GetString(dr.GetOrdinal("clave"));
 
@@ -55,7 +55,7 @@ namespace Proyecto_CineClub.Controllers
                         Celular = Celular,
                         Correo = Correo,
                         FechaNacimiento = FechaNacimiento,
-                        FechaRegistro = FechaRegistro,                        
+                        FechaRegistro = FechaRegistro,
                         Usuario = Usuario,
                         Password = Password
                     };
@@ -112,7 +112,7 @@ namespace Proyecto_CineClub.Controllers
         public ActionResult Login(LoginViewModel login)
         {
             Persona auth = GetPersona(login.correo, login.clave);
-            if( auth != null)
+            if (auth != null)
             {
                 ViewBag.mensaje = "Login correcto";
                 Session["usuario"] = auth;
@@ -140,7 +140,7 @@ namespace Proyecto_CineClub.Controllers
         public ActionResult Logout()
         {
             Session["usuario"] = null;
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "ListFilms");
         }
     }
 }

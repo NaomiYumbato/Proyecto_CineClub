@@ -5,10 +5,10 @@ using System.Web;
 
 namespace Proyecto_CineClub.Models
 {
-    public class TicketDetalle
+    public class DisponibilidadAsiento
     {
-        public int IdTicketDetalle { get; set; }
-        public int IdTicket { get; set; }
         public int IdAsiento { get; set; }
+        public int IdFuncion { get; set; }
+        public bool Disponibilidad { get; set; }
     }
 }
