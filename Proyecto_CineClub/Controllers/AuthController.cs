@@ -39,10 +39,9 @@ namespace Proyecto_CineClub.Controllers
                     string Dni = dr.GetString(dr.GetOrdinal("dni"));
                     string Celular = dr.GetString(dr.GetOrdinal("celular"));
                     string Correo = dr.GetString(dr.GetOrdinal("correo"));
-                    DateTime FechaNacimiento = dr.GetDateTime(dr.GetOrdinal("fec_nacimiento"));
-                    DateTime FechaRegistro = dr.GetDateTime(dr.GetOrdinal("fec_registro"));
+                    DateTime FechaNacimiento = dr.GetDateTime(dr.GetOrdinal("fec_nacimiento"));                
                     string Usuario = dr.GetString(dr.GetOrdinal("usuario"));
-                    string Password = dr.GetString(dr.GetOrdinal("clave"));
+                    string Clave = dr.GetString(dr.GetOrdinal("clave"));
 
                     personaAuth = new Persona
                     {
@@ -54,10 +53,9 @@ namespace Proyecto_CineClub.Controllers
                         Dni = Dni,
                         Celular = Celular,
                         Correo = Correo,
-                        FechaNacimiento = FechaNacimiento,
-                        FechaRegistro = FechaRegistro,
+                        FechaNacimiento = FechaNacimiento,                       
                         Usuario = Usuario,
-                        Password = Password
+                        Clave = Clave
                     };
                 }
                 dr.Close();
@@ -66,7 +64,7 @@ namespace Proyecto_CineClub.Controllers
         }
 
         //Metodo para registrar una persona y un cliente
-        public string RegisterUser(string primerNombre, string segundoNombre, string primerApellido, string segundoApellido, string dni, string celular, string correo, DateTime fechaNacimiento, DateTime fechaRegistro, string usuario, string clave)
+        public string RegisterUser(string primerNombre, string segundoNombre, string primerApellido, string segundoApellido, string dni, string celular, string correo, DateTime fechaNacimiento, string usuario, string clave)
         {
             try
             {
@@ -77,14 +75,13 @@ namespace Proyecto_CineClub.Controllers
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@primer_nombre", primerNombre);
-                        cmd.Parameters.AddWithValue("@segundo_nombre", segundoNombre);
+                        cmd.Parameters.AddWithValue("@segundo_nombre", (object)segundoNombre ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@primer_apellido", primerApellido);
-                        cmd.Parameters.AddWithValue("@segundo_apellido", segundoApellido);
+                        cmd.Parameters.AddWithValue("@segundo_apellido", (object)segundoApellido ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@DNI", dni);
                         cmd.Parameters.AddWithValue("@celular", celular);
                         cmd.Parameters.AddWithValue("@correo", correo);
                         cmd.Parameters.AddWithValue("@fec_nacimiento", fechaNacimiento);
-                        cmd.Parameters.AddWithValue("@fec_registro", fechaRegistro);
                         cmd.Parameters.AddWithValue("@usuario", usuario);
                         cmd.Parameters.AddWithValue("@clave", clave);
 
@@ -111,16 +108,33 @@ namespace Proyecto_CineClub.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel login)
         {
+            if (string.IsNullOrEmpty(login.correo))
+            {
+                ModelState.AddModelError("correo", "El correo es obligatorio.");
+            }
+
+            if (string.IsNullOrEmpty(login.clave))
+            {
+                ModelState.AddModelError("clave", "La contraseña es obligatoria.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(login);
+            }
+
             Persona auth = GetPersona(login.correo, login.clave);
             if (auth != null)
             {
-                ViewBag.mensaje = "Login correcto";
                 Session["usuario"] = auth;
+                TempData["mensaje"] = "Registro correcto";
                 return RedirectToAction("Index", "Home");
             }
-            ViewBag.mensaje = "Login incorrecto";
+
+            ModelState.AddModelError("", "Correo o contraseña incorrectos.");
             return View(login);
         }
+
 
         [HttpGet]
         public ActionResult Register()
@@ -131,7 +145,53 @@ namespace Proyecto_CineClub.Controllers
         [HttpPost]
         public ActionResult Register(Persona register)
         {
-            string mensaje = RegisterUser(register.PrimerNombre, register.SegundoNombre, register.PrimerApellido, register.SegundoApellido, register.Dni, register.Celular, register.Correo, register.FechaNacimiento, register.FechaRegistro, register.Usuario, register.Password);
+            // Validar los campos obligatorios
+            if (string.IsNullOrEmpty(register.PrimerNombre))
+            {
+                ModelState.AddModelError("PrimerNombre", "El primer nombre es obligatorio.");
+            }
+            if (string.IsNullOrEmpty(register.PrimerApellido))
+            {
+                ModelState.AddModelError("PrimerApellido", "El primer apellido es obligatorio.");
+            }
+            if (string.IsNullOrEmpty(register.Dni))
+            {
+                ModelState.AddModelError("Dni", "El DNI es obligatorio.");
+            }
+            if (string.IsNullOrEmpty(register.Celular))
+            {
+                ModelState.AddModelError("Celular", "El celular es obligatorio.");
+            }
+            if (string.IsNullOrEmpty(register.Correo))
+            {
+                ModelState.AddModelError("Correo", "El correo es obligatorio.");
+            }
+            if (string.IsNullOrEmpty(register.Usuario))
+            {
+                ModelState.AddModelError("Usuario", "El usuario es obligatorio.");
+            }
+            if (string.IsNullOrEmpty(register.Clave))
+            {
+                ModelState.AddModelError("Clave", "La contraseña es obligatoria.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(register);
+            }
+
+            string mensaje = RegisterUser(
+                register.PrimerNombre,
+                register.SegundoNombre,
+                register.PrimerApellido,
+                register.SegundoApellido,
+                register.Dni,
+                register.Celular,
+                register.Correo,
+                register.FechaNacimiento, 
+                register.Usuario,
+                register.Clave);
+
             ViewBag.mensaje = mensaje;
             return View(register);
         }

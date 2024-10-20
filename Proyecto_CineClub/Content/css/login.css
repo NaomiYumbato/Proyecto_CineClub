@@ -1,0 +1,67 @@
+﻿.col {
+    background-color: #fbeee6;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center; /* Centrar texto en el contenedor */
+}
+
+.screen {
+    display: flex; /* Usar flexbox */
+    align-items: center; /* Centrar verticalmente */
+    justify-content: center; /* Centrar horizontalmente */
+}
+
+.screen__content {
+    display: flex; /* Usar flexbox para el contenido */
+    flex-direction: column; /* Organizar elementos en columna */
+    align-items: center; /* Centrar horizontalmente los elementos */
+}
+
+.login__field {
+    padding: 20px 0px;
+    position: relative;
+    width: 100%; /* Asegúrate de que el campo use el 100% del contenedor */
+}
+
+.login__input {
+    border: none;
+    border-bottom: 2px solid #D1D1D4;
+    background: none;
+    padding: 10px;
+    padding-left: 24px;
+    font-weight: 700;
+    width: 100%;
+    transition: .2s;
+}
+
+.login__submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    font-size: 14px;
+    margin-top: 30px;
+    padding: 16px 20px;
+    border-radius: 26px;
+    border: 1px solid #27ae60;
+    text-transform: uppercase;
+    font-weight: 700;
+    width: 100%;
+    color: #0e6655;
+    box-shadow: 0px 2px 2px #5C5696;
+    cursor: pointer;
+    transition: .2s;
+}
+
+    .login__submit:active,
+    .login__submit:focus,
+    .login__submit:hover {
+        border-color: #27ae60;
+        outline: none;
+    }
+
+.button__icon {
+    font-size: 24px;
+    margin-left: 10px; /* Cambiar a un valor más pequeño para evitar que se vea descentrado */
+    color: #27ae60;
+}
