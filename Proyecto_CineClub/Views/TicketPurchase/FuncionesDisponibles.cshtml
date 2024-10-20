@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Proyecto_CineClub.Models.Funcion>
+
+<h2>Funciones Disponibles</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id Funcion</th>
+            <th>Id Sala</th>
+            <th>Id Pelicula</th>
+            <th>Inicio Funcion</th>
+            <th>Fin Funcion</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var funcion in Model)
+        {
+            <tr>
+                <td>@funcion.IdFuncion</td>
+                <td>@funcion.IdSala</td>
+                <td>@funcion.IdPelicula</td>
+                <td>@funcion.InicioFuncion</td>
+                <td>@funcion.FinFuncion</td>
+                <td>
+                    @Html.ActionLink("Seleccionar Asientos", "SeleccionarAsientos", "TicketPurchase", new { id_funcion = funcion.IdFuncion }, new { @class = "btn button-style" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

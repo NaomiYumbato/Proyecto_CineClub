@@ -9,6 +9,6 @@ namespace Proyecto_CineClub.Models
     {
         public int IdCliente { get; set; }
         public int IdPersona { get; set; }
-        public double Saldo { get; set; }
+        public decimal Saldo { get; set; }
     }
 }

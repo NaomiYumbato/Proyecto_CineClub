@@ -1,0 +1,39 @@
+﻿@model Proyecto_CineClub.Models.ViewModels.ConfirmarSeleccionViewModel
+
+<h2>Confirmar Selección</h2>
+
+<div>
+    <h4>ID de la Función: @Model.IdFuncion</h4>
+    <h4>Asientos Seleccionados:</h4>
+    <ul>
+        @foreach (var asiento in Model.AsientosSeleccionados)
+        {
+            <li>Asiento: @asiento.IdAsiento</li>
+        }
+    </ul>
+
+    <form method="post" action="@Url.Action("ConfirmarSeleccion", "TicketPurchase")">
+        @Html.AntiForgeryToken()
+
+        @foreach (var asiento in Model.AsientosSeleccionados)
+        {
+            <input type="" name="asientosSeleccionados" value="@asiento.IdAsiento" />
+        }
+        
+        <input type="hidden" name="IdCliente" value="@Model.IdCliente" />       
+        <input type="hidden" name="IdFuncion" value="@Model.IdFuncion" />        
+        <input type="hidden" name="Piso" value="@Model.Piso" />        
+        <input type="hidden" name="IdCine" value="@Model.IdCine" />
+
+
+        <input type="hidden" name="IdComboSeleccionado" value="@Model.IdComboSeleccionado" />
+
+        <button type="submit" class="btn btn-success">Realizar Compra</button>
+    </form>
+    
+</div>
+
+@if (!string.IsNullOrEmpty(ViewBag.Mensaje))
+{
+    <div class="alert alert-info">@ViewBag.Mensaje</div>
+}

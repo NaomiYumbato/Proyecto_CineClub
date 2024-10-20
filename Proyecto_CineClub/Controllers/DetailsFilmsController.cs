@@ -31,6 +31,7 @@ namespace Proyecto_CineClub.Controllers
                 return RedirectToAction("Index");
 
             Pelicula pelicula = BuscarPelicula(id.Value);
+
             return View(pelicula);
         }
     }

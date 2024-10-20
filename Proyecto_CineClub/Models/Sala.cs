@@ -9,9 +9,9 @@ namespace Proyecto_CineClub.Models
     {
         public int IdSala {get; set; }
         public int IdCine { get; set; }
-        public int Enumeracion { get; set; }
-        public int Capacidad { get; set; }
         public int Piso { get; set; }
+        public string Enumeracion { get; set; }
+        public string Capacidad_Sala { get; set; }
 
         // Propiedad de navegación
         public virtual Cine Cine { get; set; }
