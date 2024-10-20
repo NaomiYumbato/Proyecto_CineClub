@@ -1,39 +1,55 @@
 ﻿@model Proyecto_CineClub.Models.ViewModels.ConfirmarSeleccionViewModel
 
-<h2>Confirmar Selección</h2>
+<div class="container">
+    <div class="card m-5 mx-auto" style="max-width: 600px;">
+        <div class="card-header text-white bg-primary text-center" style="background-color:brown">
+            <h4 class="mb-0">Asientos Seleccionados</h4>
+        </div>
+        <div class="card-body text-center">
+            <ul class="list-group mb-4">
+                @foreach (var asiento in Model.AsientosSeleccionados)
+                {
+                    <li class="list-group-item">Asiento: <strong>@asiento.IdAsiento</strong></li>
+                }
+            </ul>
 
-<div>
-    <h4>ID de la Función: @Model.IdFuncion</h4>
-    <h4>Asientos Seleccionados:</h4>
-    <ul>
-        @foreach (var asiento in Model.AsientosSeleccionados)
-        {
-            <li>Asiento: @asiento.IdAsiento</li>
-        }
-    </ul>
+            <form method="post" action="@Url.Action("ConfirmarSeleccion", "TicketPurchase")" class="mt-4">
+                @Html.AntiForgeryToken()
 
-    <form method="post" action="@Url.Action("ConfirmarSeleccion", "TicketPurchase")">
-        @Html.AntiForgeryToken()
+                @foreach (var asiento in Model.AsientosSeleccionados)
+                {
+                    <input type="hidden" name="asientosSeleccionados" value="@asiento.IdAsiento" />
+                }
 
-        @foreach (var asiento in Model.AsientosSeleccionados)
-        {
-            <input type="hidden" name="asientosSeleccionados" value="@asiento.IdAsiento" />
-        }
-        
-        <input type="hidden" name="IdCliente" value="@Model.IdCliente" />       
-        <input type="hidden" name="IdFuncion" value="@Model.IdFuncion" />        
-        <input type="hidden" name="Piso" value="@Model.Piso" />        
-        <input type="hidden" name="IdCine" value="@Model.IdCine" />
+                <input type="hidden" name="IdCliente" value="@Model.IdCliente" />
+                <input type="hidden" name="IdFuncion" value="@Model.IdFuncion" />
+                <input type="hidden" name="Piso" value="@Model.Piso" />
+                <input type="hidden" name="IdCine" value="@Model.IdCine" />
+                <input type="hidden" name="IdComboSeleccionado" value="@Model.IdComboSeleccionado" />
 
+                <button type="submit" class="btn btn-success btn-block">Finalizar Compra</button>
+            </form>
+        </div>
+    </div>
 
-        <input type="hidden" name="IdComboSeleccionado" value="@Model.IdComboSeleccionado" />
-
-        <button type="submit" class="btn btn-success">Realizar Compra</button>
-    </form>
-    
+    @if (!string.IsNullOrEmpty(ViewBag.Mensaje))
+    {
+        <div class="alert alert-info mt-4 text-center">@ViewBag.Mensaje</div>
+    }
 </div>
 
-@if (!string.IsNullOrEmpty(ViewBag.Mensaje))
-{
-    <div class="alert alert-info">@ViewBag.Mensaje</div>
-}
+<style>
+    .card {
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    .btn-success {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+    .list-group-item {
+        font-size: 1.1em;
+    }
+</style>

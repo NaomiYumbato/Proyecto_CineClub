@@ -10,7 +10,7 @@
 
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col col-md-4">
+            <div class="col-login col-md-4">
                 <div class="screen">
                     <div class="screen__content text-center">
                         <!-- Mensaje de error general -->
@@ -42,9 +42,14 @@
                             <span class="button__text">Ingresar</span>
                             <i class="button__icon fas fa-chevron-right"></i>
                         </button>
+                        <br />
+                        <div>
+                            <a href="@Url.Action("Register", "Auth")" class="nav-link active" style="color: blue; text-decoration: underline; font-weight: bold;">¿No eres socio? Regístrate</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <br />
 }

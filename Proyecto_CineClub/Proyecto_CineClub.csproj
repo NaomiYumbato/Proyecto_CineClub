@@ -120,6 +120,7 @@
     <Compile Include="Controllers\DetailsFilmsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListFilmsController.cs" />
+    <Compile Include="Controllers\ListSedesController.cs" />
     <Compile Include="Controllers\TicketPurchaseController.cs" />
     <Compile Include="Data\AsientoDAO.cs" />
     <Compile Include="Data\FuncionDAO.cs" />
@@ -176,6 +177,7 @@
     <Content Include="Content\imagenes\banner1.jpg" />
     <Content Include="Content\imagenes\banner2.jpg" />
     <Content Include="Content\imagenes\banner3.jpeg" />
+    <Content Include="Content\imagenes\cine.jpg" />
     <Content Include="Content\imagenes\dulceria.jpg" />
     <Content Include="Content\imagenes\img_fondo.jpg" />
     <Content Include="Content\imagenes\logo.png" />
@@ -246,6 +248,7 @@
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\TicketPurchase\ElegirCombo.cshtml" />
+    <Content Include="Views\ListSedes\Sedes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

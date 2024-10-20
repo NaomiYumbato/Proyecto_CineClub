@@ -253,6 +253,11 @@ namespace Proyecto_CineClub.Controllers
                 ViewBag.ErrorMessage = "Por favor, seleccione al menos un asiento.";
                 return RedirectToAction("SeleccionarAsientos", new { id_funcion });
             }
+            Persona usuario = Session["usuario"] as Persona;
+            if (usuario == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             var asientosDetalles = GetAsientosPorFuncion(id_funcion)
                                     .Where(a => asientos.Contains(a.IdAsiento))
                                     .Select(a => new AsientoPurchase
@@ -297,6 +302,36 @@ namespace Proyecto_CineClub.Controllers
             };
             return View(viewModel);
         }
+
+        // Acción para mostrar los combos de dulceria
+        public ActionResult Combos_Dulceria()
+        {
+            var listado = _comboDAO.GetAll();
+            List<SelectListItem> selectItems = new List<SelectListItem>();
+            if (listado != null && listado.Any())
+            {
+                foreach (var combo in listado)
+                {
+                    string nombresProductos = "";
+                    foreach (var producto in combo.Productos)
+                    {
+                        nombresProductos += producto.Nombre + ", ";
+                    }
+                    if (nombresProductos.EndsWith(", "))
+                    {
+                        nombresProductos = nombresProductos.Substring(0, nombresProductos.Length - 2);
+                    }
+                    selectItems.Add(new SelectListItem
+                    {
+                        Value = combo.IdComboDulceria.ToString(),
+                        Text = nombresProductos
+                    });
+                }
+            }
+            ViewBag.selectCombos = new SelectList(selectItems, "Value", "Text");
+            return View(listado);
+        }
+
 
     }
 }

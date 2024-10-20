@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Proyecto_CineClub.Models.Cine>
+
+@{
+    ViewBag.Title = "Sedes";
+}
+<br />
+<h2 class="mb-4 text-center">Nuestras Sedes</h2>
+
+<section class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        @foreach (var item in Model)
+        {
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4" style="position: relative;">
+                        <img src="@Url.Content("~/Content/imagenes/cine.jpg")" class="card-img" alt="Descripción de la imagen" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Sede: @item.Sede</h5>
+                            <p class="card-text">Dirección: @item.Direccion</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<style>
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>

@@ -106,7 +106,7 @@ namespace Proyecto_CineClub.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModel login)
+        public ActionResult Login(LoginViewModel login, string returnUrl)
         {
             if (string.IsNullOrEmpty(login.correo))
             {
@@ -128,12 +128,21 @@ namespace Proyecto_CineClub.Controllers
             {
                 Session["usuario"] = auth;
                 TempData["mensaje"] = "Registro correcto";
-                return RedirectToAction("Index", "Home");
+
+                // Si la URL de retorno no está vacía y es una URL local, redirige a ella.
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+
+                // Si no hay URL de retorno, redirige a la página de inicio.
+                return RedirectToAction("Index", "ListFilms");
             }
 
             ModelState.AddModelError("", "Correo o contraseña incorrectos.");
             return View(login);
         }
+
 
 
         [HttpGet]
